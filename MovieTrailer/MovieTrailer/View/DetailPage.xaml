@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d" NavigationPage.HasNavigationBar="False"
+             x:Class="MovieTrailer.View.DetailPage">
+
+    <Grid RowSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="{Binding SelectedMovie.Thumbnail}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" 
+               VerticalOptions="FillAndExpand"/>
+        <ScrollView Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Spacing="20" Margin="20,0">
+                <Label Text="{Binding SelectedMovie.Title}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                <Label Text="{Binding SelectedMovie.Synopsis}" TextColor="Black" FontSize="14"/>
+                <pv:PancakeView HasShadow="True" Margin="0,0,0,50" BackgroundColor="#E22963" HeightRequest="40" WidthRequest="150" 
+                                CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Start">
+                    <pv:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PlayCommand}"/>
+                    </pv:PancakeView.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="Center">
+                        <Image Source="play.png" WidthRequest="14" HeightRequest="16" VerticalOptions="Center"/>
+                        <Label Text="PLAY" TextColor="White" FontSize="13" VerticalOptions="Center"/>
+                    </StackLayout>
+                </pv:PancakeView>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

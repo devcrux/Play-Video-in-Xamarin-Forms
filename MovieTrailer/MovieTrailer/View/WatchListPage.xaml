@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:vm="clr-namespace:MovieTrailer.ViewModel" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d" NavigationPage.HasNavigationBar="False"
+             x:Class="MovieTrailer.View.WatchListPage">
+
+    <ContentPage.BindingContext>
+        <vm:MovieListViewModel/>
+    </ContentPage.BindingContext>
+    <Grid BackgroundColor="Black" RowSpacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Image Source="{Binding FeaturedMovie.Thumbnail}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" 
+                   VerticalOptions="FillAndExpand"/>
+            <pv:PancakeView HeightRequest="135" Margin="0,0,0,-2" VerticalOptions="End" HorizontalOptions="FillAndExpand" 
+                            BackgroundGradientAngle="180">
+                <pv:PancakeView.BackgroundGradientStops>
+                    <pv:GradientStopCollection>
+                        <pv:GradientStop Color="Black" Offset="0"/>
+                        <pv:GradientStop Color="Transparent" Offset="1"/>
+                    </pv:GradientStopCollection>
+                </pv:PancakeView.BackgroundGradientStops>
+                <pv:PancakeView HasShadow="True" Margin="0,0,0,50" BackgroundColor="#E22963" HeightRequest="40" WidthRequest="150" 
+                                CornerRadius="20" HorizontalOptions="Center" VerticalOptions="End">
+                    <pv:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PlayCommand}"/>
+                    </pv:PancakeView.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" Spacing="15" HorizontalOptions="Center">
+                        <Image Source="play.png" WidthRequest="14" HeightRequest="16" VerticalOptions="Center"/>
+                        <Label Text="PLAY" TextColor="White" FontSize="13" VerticalOptions="Center"/>
+                    </StackLayout>
+                </pv:PancakeView>
+            </pv:PancakeView>
+        </Grid>
+        <StackLayout Grid.Row="1" Spacing="10" Margin="20,5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label Text="MY WATCH LIST" TextColor="White" FontAttributes="Bold" />
+            <CollectionView x:Name="moviesColView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                HorizontalScrollBarVisibility="Never"
+                        ItemsSource="{Binding WatchList}" SelectedItem="{Binding SelectedMovie}"
+                        SelectionMode="Single" SelectionChangedCommand="{Binding SelectionCommand}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid WidthRequest="135" HeightRequest="195" Padding="0,10">
+                            <pv:PancakeView HasShadow="True" BorderThickness="1" BorderColor="#825060" CornerRadius="23" 
+                                                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Image Source="{Binding Thumbnail}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <pv:PancakeView BackgroundColor="Black" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="End">
+                                        <Label Text="{Binding Title}" TextColor="White" FontSize="14" HorizontalOptions="Center" 
+                                                   LineBreakMode="NoWrap"/>
+                                    </pv:PancakeView>
+                                </Grid>
+                            </pv:PancakeView>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </Grid>
+</ContentPage>
